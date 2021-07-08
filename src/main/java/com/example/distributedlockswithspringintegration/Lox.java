@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.integration.jdbc.lock.DefaultLockRepository;
 import org.springframework.integration.jdbc.lock.JdbcLockRegistry;
 import org.springframework.integration.jdbc.lock.LockRepository;
+import org.springframework.integration.support.leader.LockRegistryLeaderInitiator;
 import org.springframework.integration.support.locks.DefaultLockRegistry;
 import org.springframework.integration.support.locks.LockRegistry;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -21,7 +22,7 @@ public class Lox {
 	}
 
 	@Bean
-	DefaultLockRepository defaultLockRegistry(DataSource dataSource) {
+	LockRepository defaultLockRegistry(DataSource dataSource) {
 		return new DefaultLockRepository(dataSource);
 	}
 
@@ -30,4 +31,8 @@ public class Lox {
 		return new JdbcLockRegistry(lockRepository);
 	}
 
+	@Bean
+	public LockRegistryLeaderInitiator lockRegistryLeaderInitiator(LockRegistry locks) {
+		return new LockRegistryLeaderInitiator(locks);
+	}
 }
