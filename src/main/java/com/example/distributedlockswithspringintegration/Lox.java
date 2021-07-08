@@ -20,19 +20,4 @@ public class Lox {
 	public static void main(String[] args) {
 		SpringApplication.run(Lox.class, args);
 	}
-
-	@Bean
-	LockRepository defaultLockRegistry(DataSource dataSource) {
-		return new DefaultLockRepository(dataSource);
-	}
-
-	@Bean
-	JdbcLockRegistry jdbcLockRegistry(LockRepository lockRepository) {
-		return new JdbcLockRegistry(lockRepository);
-	}
-
-	@Bean
-	public LockRegistryLeaderInitiator lockRegistryLeaderInitiator(LockRegistry locks) {
-		return new LockRegistryLeaderInitiator(locks);
-	}
 }
